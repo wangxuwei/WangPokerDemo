@@ -1,0 +1,23 @@
+.MainScreen{
+	position:relative;
+	width:100%;
+	height:100%;
+	text-align:center;
+}
+
+.MainScreen .baseCanvas{
+	position:absolute;
+	z-index: -1;
+}
+
+.MainScreen .poker{
+	position:absolute;
+	left:0;top:0;
+	z-index: 1;
+}
+
+.MainScreen .btn{
+	width:100px;
+	height:30px;
+	margin:2px 0 0 0;
+}

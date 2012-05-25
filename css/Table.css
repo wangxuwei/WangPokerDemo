@@ -1,0 +1,41 @@
+.Table{
+	position:absolute;
+	left:350px;
+	top:200px;
+	width:900px;
+	height:400px;
+}
+.Table .table-content{
+	position:relative;
+	width:100%;
+	height:100%;
+	background:#2c2012;
+	border-radius:105px;
+}
+
+.Table .table-center{
+	position:absolute;
+	left:20px;right:20px;top:20px;bottom:20px;
+	background-color:#0a9c2c;
+	border-radius:90px;
+}
+
+.Table .player{
+	position:absolute;
+	height:2px;width:2px;
+	top:120px;
+}
+.Table .player1{
+	left:100px;
+}
+.Table .player2{
+	left:700px;
+}
+
+.Table .winMessage{
+	position:absolute;
+	height:2px;width:2px;
+	top:120px;
+	left:380px;
+	display:none;
+}

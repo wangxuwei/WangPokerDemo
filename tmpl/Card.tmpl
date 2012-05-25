@@ -1,0 +1,19 @@
+<script id="tmpl-Card" type="text/html">
+    <div class="Card {{if transparent}}transparent{{/if}}">
+    	<div class="card-content">
+	    	<div class="card-bg-content">
+	    		<div class="card-center"></div>
+	    	</div>
+	    	<div class="card-fg-content">
+	    	{{if card}}
+	    		<span class="number" style="color:{{:card.colorObj.color}}">
+	    		{{:card.number}}
+	    		</span>
+	    		<span class="colorObj" style="color:{{:card.colorObj.color}}">
+	    		{{:card.colorObj.value}}
+	    		</span>
+	    	{{/if}}
+	    	</div>
+    	</div>
+    </div>
+</script>
