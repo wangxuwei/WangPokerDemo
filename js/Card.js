@@ -8,12 +8,23 @@
 		var transparent = false;
 		if(data && data.card){
 			card = data.card;
+			if(card){
+				card.colorValue = app.cards.getColorValue(card.color);
+			}
 		}
 		if(data && data.transparent){
 			transparent = data.transparent;
 		}
 		var html = $("#tmpl-Card").render({card:card,transparent:transparent});
 		return $(html);
+	}
+	
+	Card.prototype.init = function(data,config){
+		var c = this;
+		var $e = this.$element;
+		if(data && data.card){
+			$e.data("card",data.card);
+		}
 	}
 		
 	Card.prototype.postDisplay = function(data,config){

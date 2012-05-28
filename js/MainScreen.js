@@ -38,34 +38,47 @@
 		var $player2 = $e.find(".player.player2");
 		var $winMessage = $e.find(".winMessage");
 		var $who = $e.find(".winMessage .who");
+		var $result = $e.find(".winMessage .result");
 		$winMessage.hide();
 		$who.empty();
-		$e.find(".poker").empty();
+		$player1.empty();
+		$player2.empty();
+		//two plays
 		var players = [$player1,$player2];
-		var cards = app.cards.getCards();
-		var first = parseInt(Math.random() * 50);
-		var card1 = cards[first];
-		cards.splice(first,1);
-		var second = parseInt(Math.random() * 49);
-		var card2 = cards[second];
-		cards.splice(second,1);
-		var gCards = [card1,card2];
-		var t = false;
+		var gCards = [];
+		var cards = app.cards.retriveCards();
+		for(var i = 0; i < players.length * 5; i++){
+			gCards.push(app.cards.getCard(cards));
+		}
+		
 		app.util.serialResolve(gCards,function(obj,i){
 			var cardInfo = obj;
 			var dfd = $.Deferred();
-			var parent = ".poker";
+			var parent = ".player"+(i % 2 + 1);
 			brite.display("Card",{card:cardInfo,transparent:true},{parent:parent}).done(function(card){
-				rotate.call(c,card,players[i]).done(function(){
+				rotate.call(c,card,players[i%2]).done(function(){
 					dfd.resolve();
 				});	
 			});
 			return dfd.promise();
 		}).done(function(){
-			if(app.cards.compare(card1,card2)){
+			var pCards1 = [];
+			var pCards2 = [];
+			$player1.find(".Card").each(function(){
+				pCards1.push($(this).data("card"));
+			});
+			$player2.find(".Card").each(function(){
+				pCards2.push($(this).data("card"));
+			});
+			if(app.cards.compare1(pCards1,pCards2) > 0){
 				$who.html("Player1");
-			}else{
+				$result.html("Win");
+			}else if(app.cards.compare1(pCards1,pCards2) < 0){
 				$who.html("Player2");
+				$result.html("Win");
+			}else{
+				$who.html("");
+				$result.html("Draw");
 			}
 			$winMessage.show();
 			$e.find(".btnGo").removeClass("disable");
@@ -88,14 +101,17 @@
         domElement.regX = $card.width()/2;
         domElement.regY = $card.height()/2;
         //move the form above the screen
-        domElement.x = $dealer.position().left;
-        domElement.y = $dealer.position().top;
+        domElement.x = $dealer.offset().left - $player.offset().left;
+        domElement.y = $dealer.offset().top - $player.offset().top;
         stage.addChild(domElement);
         Ticker.setFPS(32);
         Ticker.addListener(stage);
+        
+        var size = $player.find(".Card").size();
+        var y = size * 20;
          
         //Apply a tween to the form
-        Tween.get(domElement).to({alpha:1, y:$player.offset().top,x:$player.offset().left, rotation:720},2000,Ease.cubicOut).call(function(){
+        Tween.get(domElement).to({alpha:1, y:y,x:0, rotation:720},2000,Ease.cubicOut).call(function(){
         	stage.removeChild(domElement);
         	card.show();
         	dfd.resolve();

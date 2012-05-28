@@ -22,11 +22,10 @@
 
 .Table .player{
 	position:absolute;
-	height:2px;width:2px;
 	top:120px;
 }
 .Table .player1{
-	left:100px;
+	left:200px;
 }
 .Table .player2{
 	left:700px;
